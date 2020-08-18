@@ -1,0 +1,8 @@
+body {
+  background: url("./images/pexels-nicolas-postiglioni-421129.jpg") no-repeat
+    center center fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-sixe: cover;
+}
