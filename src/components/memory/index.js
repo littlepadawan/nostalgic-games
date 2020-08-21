@@ -169,6 +169,25 @@ function Memory() {
     setWin(false);
   }
 
+  // Can be moved to helpers (memory below, is the game id from firebase)
+  //.then((leaderboard)) is the result of previous call( utils.fetchLeaderboard)
+  function fetchLeaderboard() {
+    return utils
+      .fetchLeaderboard("memory", [["timeMs", "asc"]])
+      .then((leaderboard) =>
+        // turns every score to a string, by usin string templates
+        leaderboard.map(
+          (score, i) => ` ${i + 1} ${score.name}: ${score.timeMs} ms`
+        )
+      );
+  }
+
+  // can be moved to helpers
+  function saveScore(name, timeMs) {
+    // below, you cold write {name, timeMs}
+    utils.saveScore("memory", { name: name, timeMs: timeMs });
+  }
+
   return (
     <div className="game-container">
       <StatusBar
@@ -190,6 +209,8 @@ function Memory() {
         handleClose={() => setShowModal(false)}
         header={"You won"}
         body={"Your time was " + elapsedTime + " ms"}
+        fetchLeaderboard={fetchLeaderboard}
+        saveScore={(name) => saveScore(name, elapsedTime)}
       ></ResultModal>
     </div>
   );

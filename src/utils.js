@@ -5,13 +5,21 @@ import "firebase/firestore";
 /*
  *Returns a promise holding an array of our score objects
  * game parameter is either "memory, "snake" or "minesweeper" (collection id)
+ * orderBy paramater is an array containing sorting instructions, e.g. for snake [["score", "desc"],["timesMs", "asc"]]
  */
-export function fetchLeaderboard(game) {
+export function fetchLeaderboard(game, orderBy) {
   const auth = firebase.auth();
   const db = firebase.firestore();
   return auth
     .signInAnonymously()
-    .then(() => db.collection(game).orderBy("timeMs", "asc").get())
+    .then(() => {
+      let query = db.collection(game);
+      orderBy.forEach((rule) => {
+        //unwrapp array and send all of the things as array to the function
+        query = query.orderBy(...rule);
+      });
+      return query.limit(10).get();
+    })
     .then((querySnapshot) => {
       let leaderboard = [];
       querySnapshot.forEach((doc) => {
