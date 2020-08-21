@@ -5,3 +5,8 @@
   text-align: center;
   background: white;
 }
+
+.game-container {
+  width: 40vw;
+  margin: 1vw auto;
+}
