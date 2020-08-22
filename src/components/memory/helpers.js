@@ -30,10 +30,12 @@ export function generateCards() {
 }
 
 /* 
-  Returns a new array of cards where the specified card (cardToFlip)
+  Returns a new array of cards where the specified card (keysToFlip (ungefär, card to Flip))
   will have a different value of its isFlipped: true changes to false and false to true.
+  Loops through all cards and checks for the clicked cards key. When it finds the card that matches
+  the clicked cards key, it changes the value of isFlipped
   */
-export function flipCard(cards, keysToFlip) {
+export function flipCards(cards, keysToFlip) {
   return cards.map((card) => {
     return {
       ...card,
@@ -50,16 +52,16 @@ export function calculateNewGame(
   onGameWon,
   setWrongPair
 ) {
-  // If the card is already flipped there is nothing we need to do (write an if-statement with a return; inside)
+  // If the card is already flipped there is nothing we need to do
   if (clickedCard.isFlipped) {
     return { cards, firstCard };
   }
 
-  const newCards = flipCard(cards, [clickedCard.key]);
+  const newCards = flipCards(cards, [clickedCard.key]);
   const isCardFlipped = (card) => card.isFlipped;
 
-  // The { cards, firstCard, secondCard } above is the decomposed game object.
-  // These three variables represent the previous state, before a card was clicked.
+  // The { cards, firstCard } above is the decomposed game object.
+  // These two variables represent the previous state, before a card was clicked.
   // We should return the new state, depending on the previous one and on the card that was clicked.
   // There are 4 different cases.
   // 1. If both firstCard and secondCard from the previous state are undefined =>
@@ -90,7 +92,7 @@ export function calculateNewGame(
   }
 }
 
-// Can be moved to helpers (memory below, is the game id from firebase)
+//  (memory below, is the game id from firebase)
 //.then((leaderboard)) is the result of previous call( utils.fetchLeaderboard)
 export function fetchLeaderboard() {
   return utils
@@ -98,12 +100,12 @@ export function fetchLeaderboard() {
     .then((leaderboard) =>
       // turns every score to a string, by usin string templates
       leaderboard.map(
-        (score, i) => ` ${i + 1} ${score.name}: ${score.timeMs} ms`
+        (score, i) =>
+          ` ${i + 1} ${score.name}: ${utils.prettifyTime(score.timeMs)} `
       )
     );
 }
 
-// can be moved to helpers
 export function saveScore(name, timeMs) {
   // below, you cold write {name, timeMs}
   return utils.saveScore("memory", { name: name, timeMs: timeMs });

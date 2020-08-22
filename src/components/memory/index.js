@@ -18,6 +18,10 @@ function Memory() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [win, setWin] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [wrongPair, setWrongPair] = useState(null);
+
+  const timeoutIds = useRef([]);
+
   // useEffect(<effect function>, <dependency array (optional)>)
   //<dependency array> :
   // *undefined: effect will run on every render
@@ -39,15 +43,13 @@ function Memory() {
     }
   }, [win]);
 
-  const [wrongPair, setWrongPair] = useState(null);
-
   useEffect(() => {
     if (!wrongPair) return;
     const timeoutId = setTimeout(() => {
       setGame((oldGame) => {
         return {
           ...oldGame,
-          cards: helpers.flipCard(
+          cards: helpers.flipCards(
             oldGame.cards,
             wrongPair.map((card) => card.key)
           ),
@@ -57,13 +59,12 @@ function Memory() {
     timeoutIds.current = timeoutIds.current.concat(timeoutId);
   }, [wrongPair]);
 
+  // Can be removed once we have added logic for disable to click more than two cards
   useEffect(() => {
     return () => {
       timeoutIds.current.forEach((id) => clearTimeout(id));
     };
   }, []);
-
-  const timeoutIds = useRef([]);
 
   function onCardClicked(clickedCard) {
     setGame((oldGame) =>
@@ -96,7 +97,7 @@ function Memory() {
   return (
     <div className="game-container">
       <StatusBar
-        status={"Time: " + elapsedTime}
+        status={`Time: ${utils.prettifyTime(elapsedTime)}`}
         onRestart={onRestart}
       ></StatusBar>
       <div className="memory-grid">
@@ -113,7 +114,7 @@ function Memory() {
         show={showModal}
         handleClose={() => setShowModal(false)}
         header={"You won"}
-        body={"Your time was " + elapsedTime + " ms"}
+        body={`Your time was ${utils.prettifyTime(elapsedTime)}.`}
         fetchLeaderboard={helpers.fetchLeaderboard}
         saveScore={(name) => helpers.saveScore(name, elapsedTime)}
       ></ResultModal>
