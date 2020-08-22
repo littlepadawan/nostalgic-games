@@ -8,6 +8,7 @@ import "firebase/firestore";
  * orderBy paramater is an array containing sorting instructions, e.g. for snake [["score", "desc"],["timesMs", "asc"]]
  */
 export function fetchLeaderboard(game, orderBy) {
+  console.log("Fetching leaderboard");
   const auth = firebase.auth();
   const db = firebase.firestore();
   return auth
