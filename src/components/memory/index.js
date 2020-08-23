@@ -113,7 +113,7 @@ function Memory() {
       <ResultModal
         show={showModal}
         handleClose={() => setShowModal(false)}
-        header={"You won"}
+        header={"Congratulations, you won!"}
         body={`Your time was ${utils.prettifyTime(elapsedTime)}.`}
         fetchLeaderboard={helpers.fetchLeaderboard}
         saveScore={(name) => helpers.saveScore(name, elapsedTime)}
