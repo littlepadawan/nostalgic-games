@@ -1,5 +1,6 @@
-const width = 20;
-const height = 12;
+import * as utils from "../../utils";
+export const width = 20;
+export const height = 12;
 
 export function generateGame() {
   const snake = {
@@ -118,4 +119,28 @@ export function isGameOver(game) {
 
 function isOutOfBounds(cell) {
   return cell.x < 0 || cell.x >= width || cell.y < 0 || cell.y >= height;
+}
+
+export const getScore = (game) => game.snake.tail.length - 1;
+
+export function fetchLeaderboard() {
+  return utils
+    .fetchLeaderboard("snake", [
+      ["score", "desc"],
+      ["timeMs", "asc"],
+    ])
+    .then((leaderboard) =>
+      // turns every score to a string, by usin string templates
+      leaderboard.map(
+        (score, i) =>
+          `${i + 1}. ${score.name}: ${score.score}, ${utils.prettifyTime(
+            score.timeMs
+          )}`
+      )
+    );
+}
+
+export function saveScore(name, score, timeMs) {
+  // below, you could write {name, score, timeMs}
+  return utils.saveScore("snake", { name: name, score: score, timeMs: timeMs });
 }

@@ -4,7 +4,6 @@
 }
 
 .status {
-  flex: 1;
   margin: 0;
   font-weight: 600;
   color: white;
@@ -13,4 +12,8 @@
 .button {
   flex: 0;
   margin-left: 10px;
+}
+
+.status-container {
+  flex: 1;
 }

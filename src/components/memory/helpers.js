@@ -108,7 +108,7 @@ export function fetchLeaderboard() {
       // turns every score to a string, by usin string templates
       leaderboard.map(
         (score, i) =>
-          ` ${i + 1} ${score.name}: ${utils.prettifyTime(score.timeMs)} `
+          `${i + 1}. ${score.name}: ${utils.prettifyTime(score.timeMs)}`
       )
     );
 }

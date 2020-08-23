@@ -20,6 +20,7 @@ function Memory() {
   const [showModal, setShowModal] = useState(false);
   const [wrongPair, setWrongPair] = useState(null);
   const [scoreCanBeSaved, setScoreCanBeSaved] = useState(false);
+  const [clickDisabled, setClickDisabled] = useState(false);
 
   const timeoutIds = useRef([]); // typ som useState men komponenten rederar inte om
 
@@ -47,6 +48,7 @@ function Memory() {
 
   useEffect(() => {
     if (!wrongPair) return;
+    setClickDisabled(true);
     const timeoutId = setTimeout(() => {
       setGame((oldGame) => {
         return {
@@ -57,6 +59,7 @@ function Memory() {
           ),
         };
       });
+      setClickDisabled(false);
     }, 1000);
     timeoutIds.current = timeoutIds.current.concat(timeoutId);
   }, [wrongPair]);
@@ -69,6 +72,7 @@ function Memory() {
   }, []);
 
   function onCardClicked(clickedCard) {
+    if (clickDisabled) return;
     setGame((oldGame) =>
       helpers.calculateNewGame(
         oldGame,
@@ -100,7 +104,7 @@ function Memory() {
   return (
     <div className="game-container">
       <StatusBar
-        status={`Time: ${utils.prettifyTime(elapsedTime)}`}
+        status1={`Time: ${utils.prettifyTime(elapsedTime)}`}
         onRestart={onRestart}
         onShowLeaderboard={() => setShowModal(true)}
       ></StatusBar>
