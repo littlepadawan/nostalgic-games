@@ -19,6 +19,7 @@ function Memory() {
   const [win, setWin] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [wrongPair, setWrongPair] = useState(null);
+  const [scoreCanBeSaved, setScoreCanBeSaved] = useState(false);
 
   const timeoutIds = useRef([]); // typ som useState men komponenten rederar inte om
 
@@ -40,6 +41,7 @@ function Memory() {
   useEffect(() => {
     if (win) {
       setShowModal(true);
+      setScoreCanBeSaved(true);
     }
   }, [win]);
 
@@ -92,6 +94,7 @@ function Memory() {
     timeoutIds.current.forEach((id) => clearTimeout(id));
     timeoutIds.current = [];
     setWin(false);
+    setScoreCanBeSaved(false);
   }
 
   return (
@@ -99,6 +102,7 @@ function Memory() {
       <StatusBar
         status={`Time: ${utils.prettifyTime(elapsedTime)}`}
         onRestart={onRestart}
+        onShowLeaderboard={() => setShowModal(true)}
       ></StatusBar>
       <div className="memory-grid">
         {game.cards.map((card) => (
@@ -113,10 +117,15 @@ function Memory() {
       <ResultModal
         show={showModal}
         handleClose={() => setShowModal(false)}
-        header={"Congratulations, you won!"}
-        body={`Your time was ${utils.prettifyTime(elapsedTime)}.`}
+        header={win ? "Congratulations, you won!" : "Leaderboard"}
+        body={win ? `Your time was ${utils.prettifyTime(elapsedTime)}.` : ""}
         fetchLeaderboard={helpers.fetchLeaderboard}
-        saveScore={(name) => helpers.saveScore(name, elapsedTime)}
+        saveScore={(name) =>
+          helpers
+            .saveScore(name, elapsedTime)
+            .then(() => setScoreCanBeSaved(false))
+        }
+        scoreCanBeSaved={scoreCanBeSaved}
       ></ResultModal>
     </div>
   );

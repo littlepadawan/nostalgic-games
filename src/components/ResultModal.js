@@ -10,18 +10,18 @@ function ResultModal({
   body,
   fetchLeaderboard,
   saveScore,
+  scoreCanBeSaved,
 }) {
   const [name, setName] = useState(null);
   const [leaderboard, setLeaderboard] = useState(null);
-  const [scoreIsSaved, setScoreIsSaved] = useState(false);
+  //const [scoreCanBeSaved, setScoreCanBeSaved] = useState(scoreCanBeSaved);
+
   useEffect(() => {
     if (show) {
       setLeaderboard(null);
       fetchLeaderboard().then(setLeaderboard);
-    } else {
-      setScoreIsSaved(false);
     }
-  }, [show, scoreIsSaved]);
+  }, [show, scoreCanBeSaved]);
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -32,7 +32,7 @@ function ResultModal({
         <p>{body}</p>
         {!leaderboard && <p>Loading leaderboard...</p>}
         {leaderboard && leaderboard.map((entry, i) => <p key={i}>{entry}</p>)}
-        {!scoreIsSaved && (
+        {scoreCanBeSaved && (
           <Form.Control
             type="text"
             placeholder="Enter name"
@@ -41,12 +41,12 @@ function ResultModal({
         )}
       </Modal.Body>
       <Modal.Footer>
-        {!scoreIsSaved && (
+        {scoreCanBeSaved && (
           <Button
             variant="secondary"
             onClick={() => {
-              if (name && !scoreIsSaved) {
-                saveScore(name).then(() => setScoreIsSaved(true));
+              if (name && scoreCanBeSaved) {
+                saveScore(name);
               }
             }}
           >
@@ -56,7 +56,7 @@ function ResultModal({
         <Button
           variant="secondary"
           onClick={() => {
-            if (name && !scoreIsSaved) {
+            if (name && scoreCanBeSaved) {
               saveScore(name);
             }
             handleClose();
