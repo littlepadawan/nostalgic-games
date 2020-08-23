@@ -17,13 +17,13 @@ export function generateCards() {
       key: i * 2,
       color: colors[i],
       isFlipped: false,
-      isLocked: false,
+      isMatched: false,
     });
     cards.push({
       key: i * 2 + 1,
       color: colors[i],
       isFlipped: false,
-      isLocked: false,
+      isMatched: false,
     });
   }
   return cards.sort(() => Math.random() - 0.5);
@@ -46,6 +46,15 @@ export function flipCards(cards, keysToFlip) {
   });
 }
 
+export function matchCards(cards, keysToMatch) {
+  return cards.map((card) => {
+    return {
+      ...card,
+      isMatched: keysToMatch.includes(card.key) ? true : card.isMatched,
+    };
+  });
+}
+
 export function calculateNewGame(
   { cards, firstCard },
   clickedCard,
@@ -57,8 +66,7 @@ export function calculateNewGame(
     return { cards, firstCard };
   }
 
-  const newCards = flipCards(cards, [clickedCard.key]);
-  const isCardFlipped = (card) => card.isFlipped;
+  let newCards = flipCards(cards, [clickedCard.key]);
 
   // The { cards, firstCard } above is the decomposed game object.
   // These two variables represent the previous state, before a card was clicked.
@@ -76,14 +84,13 @@ export function calculateNewGame(
   // 2. Else, if firstCard is defined, but secondCard isn't =>
   // we should flip the clicked card
   else {
-    cards.map((card) => {
-      card.isLocked = true;
-      console.log(card.key + " " + card.isLocked);
-    });
     if (firstCard.color !== clickedCard.color) {
       setWrongPair([firstCard, clickedCard]);
+    } else {
+      newCards = matchCards(newCards, [firstCard.key, clickedCard.key]);
     }
-    if (newCards.every(isCardFlipped)) {
+    // Check if all cards in newCards are flipped, if true game is won
+    if (newCards.every((card) => card.isMatched)) {
       onGameWon();
     }
     return {

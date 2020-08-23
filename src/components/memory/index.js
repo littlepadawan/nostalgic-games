@@ -20,7 +20,7 @@ function Memory() {
   const [showModal, setShowModal] = useState(false);
   const [wrongPair, setWrongPair] = useState(null);
 
-  const timeoutIds = useRef([]);
+  const timeoutIds = useRef([]); // typ som useState men komponenten rederar inte om
 
   // useEffect(<effect function>, <dependency array (optional)>)
   //<dependency array> :
@@ -59,7 +59,7 @@ function Memory() {
     timeoutIds.current = timeoutIds.current.concat(timeoutId);
   }, [wrongPair]);
 
-  // Can be removed once we have added logic for disable to click more than two cards
+  // Can be removed once we have added logic for disable to click more than two cards?
   useEffect(() => {
     return () => {
       timeoutIds.current.forEach((id) => clearTimeout(id));
