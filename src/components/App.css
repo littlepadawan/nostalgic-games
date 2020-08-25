@@ -1,3 +1,14 @@
+@media only screen and (orientation: landscape) {
+  .game-container {
+    width: 40vw;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  .game-container {
+    width: 90vw;
+  }
+}
 .text-container {
   position: absolute;
   top: 50%;
@@ -7,6 +18,5 @@
 }
 
 .game-container {
-  width: 40vw;
   margin: 1vw auto;
 }

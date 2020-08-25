@@ -2,6 +2,11 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import "./StatusBar.css";
 
+/*
+ * Renders the statusbar
+ * status1 is time (maybe change to statusTime?)
+ * status2 is score (maybe change to statusScore?)
+ */
 function StatusBar({ status1, status2, onRestart, onShowLeaderboard }) {
   return (
     <div className="status-bar">

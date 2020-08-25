@@ -4,6 +4,7 @@ import * as helpers from "./helpers";
 import * as utils from "../../utils";
 import StatusBar from "../StatusBar";
 import ResultModal from "../ResultModal";
+import TouchController from "./TouchController";
 
 function Snake() {
   const [game, setGame] = useState(helpers.generateGame());
@@ -78,6 +79,18 @@ function Snake() {
     }
   }
 
+  function setDir(dir) {
+    setGame((oldGame) => {
+      return {
+        ...oldGame,
+        snake: {
+          ...oldGame.snake,
+          dir,
+        },
+      };
+    });
+  }
+
   function onRestart() {
     setGameOver(false);
     setGame(helpers.generateGame());
@@ -116,6 +129,7 @@ function Snake() {
         onShowLeaderboard={() => setShowModal(true)}
       ></StatusBar>
       <div className="snake-grid">{cells}</div>
+      <TouchController onChangeDir={setDir} />
       <ResultModal
         show={showModal}
         handleClose={() => setShowModal(false)}

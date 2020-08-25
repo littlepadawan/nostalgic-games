@@ -14,7 +14,7 @@ function ResultModal({
 }) {
   const [name, setName] = useState(null);
   const [leaderboard, setLeaderboard] = useState(null);
-  //const [scoreCanBeSaved, setScoreCanBeSaved] = useState(scoreCanBeSaved);
+  //const [scoreCanBeSaved, setScoreCanBeSaved] = useState(scoreCanBeSaved); ---- can we remove this?
 
   useEffect(() => {
     if (show) {

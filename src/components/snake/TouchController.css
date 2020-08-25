@@ -1,0 +1,34 @@
+.tc-container {
+  margin-top: 4vw;
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (orientation: landscape) {
+  .tc-container {
+    display: none;
+  }
+}
+.tc-grid {
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw;
+  grid-template-rows: 20vw 20vw 20vw;
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+}
+.tc-button {
+  font-size: 8vw;
+}
+.tc-up {
+  grid-area: up;
+}
+.tc-right {
+  grid-area: right;
+}
+.tc-down {
+  grid-area: down;
+}
+.tc-left {
+  grid-area: left;
+}

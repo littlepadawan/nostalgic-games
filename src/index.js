@@ -8,7 +8,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-  // Your web app's Firebase configuration
+  // Web app's Firebase configuration
   apiKey: "AIzaSyCscXyE4f3vDr1DhS6dnor00GMCYAuw8vQ",
   authDomain: "nostalgic-games.firebaseapp.com",
   databaseURL: "https://nostalgic-games.firebaseio.com",
