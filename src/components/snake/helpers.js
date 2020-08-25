@@ -19,6 +19,7 @@ export function generateGame() {
   return {
     snake: snake,
     food: generateFood(snake),
+    commands: [],
   };
 }
 
@@ -48,17 +49,53 @@ function random(max) {
 
 // Generete new game state depending on previous game state
 export function tick(game) {
+  // can replace next three lines with const {snake, food, commands } = game;
   const oldSnake = game.snake;
   const oldFood = game.food;
+  const commands = game.commands;
+
+  let newCommands = [...commands];
+
+  /* If there is a command and you have pressed opposite direction or the command is the same as current direction,
+   * remove the first direction command in newCommands array */
+  while (
+    newCommands.length > 0 &&
+    (isOpposite(newCommands[0], oldSnake.dir) ||
+      newCommands[0] === oldSnake.dir)
+  ) {
+    newCommands = newCommands.slice(1);
+  }
+
+  let newDir = oldSnake.dir;
+  if (newCommands.length > 0) {
+    newDir = newCommands[0];
+    newCommands = newCommands.slice(1);
+  }
 
   // New cell, in newDirection
-  const newHead = generateNewHead(oldSnake);
+  let newHead;
+  switch (newDir) {
+    case "right":
+      newHead = { x: oldSnake.head.x + 1, y: oldSnake.head.y };
+      break;
+    case "down":
+      newHead = { x: oldSnake.head.x, y: oldSnake.head.y + 1 };
+      break;
+    case "left":
+      newHead = { x: oldSnake.head.x - 1, y: oldSnake.head.y };
+      break;
+    case "up":
+      newHead = { x: oldSnake.head.x, y: oldSnake.head.y - 1 };
+      break;
+  }
+
   // First cell in new tail is the old head cell. You also want to remove last tail cell, if you havent eaten food
   const newTail = generateNewTail(oldSnake, oldFood, newHead);
   const newSnake = {
     ...oldSnake,
     head: newHead,
     tail: newTail,
+    dir: newDir,
   };
 
   // Wait a minute... if newHead has eaten the food, we should generate new food!
@@ -69,27 +106,27 @@ export function tick(game) {
     newFood = generateFood(newSnake);
   }
 
-  return { snake: newSnake, food: newFood };
-
-  function generateNewHead(oldSnake) {
-    let newHead;
-    switch (oldSnake.dir) {
-      case "right":
-        newHead = { x: oldSnake.head.x + 1, y: oldSnake.head.y };
-        break;
-      case "down":
-        newHead = { x: oldSnake.head.x, y: oldSnake.head.y + 1 };
-        break;
-      case "left":
-        newHead = { x: oldSnake.head.x - 1, y: oldSnake.head.y };
-        break;
-      case "up":
-        newHead = { x: oldSnake.head.x, y: oldSnake.head.y - 1 };
-        break;
-    }
-    return newHead;
-  }
+  return { snake: newSnake, food: newFood, commands: newCommands };
 }
+
+// function generateNewHead(oldSnake) {
+//   let newHead;
+//   switch (oldSnake.dir) {
+//     case "right":
+//       newHead = { x: oldSnake.head.x + 1, y: oldSnake.head.y };
+//       break;
+//     case "down":
+//       newHead = { x: oldSnake.head.x, y: oldSnake.head.y + 1 };
+//       break;
+//     case "left":
+//       newHead = { x: oldSnake.head.x - 1, y: oldSnake.head.y };
+//       break;
+//     case "up":
+//       newHead = { x: oldSnake.head.x, y: oldSnake.head.y - 1 };
+//       break;
+//   }
+//   return newHead;
+// }
 
 function generateNewTail(oldSnake, oldFood, newHead) {
   // Create a variable newTail (an array). Its first cell should be the old snake's head
@@ -143,4 +180,13 @@ export function fetchLeaderboard() {
 export function saveScore(name, score, timeMs) {
   // below, you could write {name, score, timeMs}
   return utils.saveScore("snake", { name: name, score: score, timeMs: timeMs });
+}
+
+function isOpposite(dir1, dir2) {
+  return (
+    (dir1 === "left" && dir2 === "right") ||
+    (dir1 === "right" && dir2 === "left") ||
+    (dir1 === "up" && dir2 === "down") ||
+    (dir1 === "down" && dir2 === "up")
+  );
 }

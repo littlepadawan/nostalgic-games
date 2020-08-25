@@ -73,20 +73,17 @@ function Snake() {
       setGame((oldGame) => {
         return {
           ...oldGame,
-          snake: { ...oldGame.snake, dir: newDir || oldGame.dir },
+          commands: [...oldGame.commands, newDir],
         };
       });
     }
   }
 
-  function setDir(dir) {
+  function addCommand(dir) {
     setGame((oldGame) => {
       return {
         ...oldGame,
-        snake: {
-          ...oldGame.snake,
-          dir,
-        },
+        commands: [...oldGame.commands, dir],
       };
     });
   }
@@ -129,7 +126,7 @@ function Snake() {
         onShowLeaderboard={() => setShowModal(true)}
       ></StatusBar>
       <div className="snake-grid">{cells}</div>
-      <TouchController onChangeDir={setDir} />
+      <TouchController onChangeDir={addCommand} />
       <ResultModal
         show={showModal}
         handleClose={() => setShowModal(false)}
