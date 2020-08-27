@@ -4,6 +4,7 @@ import "./StatusBar.css";
 
 /*
  * Renders the statusbar
+ * Shows time and/or score depending on what game is rendered
  * status1 is time (maybe change to statusTime?)
  * status2 is score (maybe change to statusScore?)
  */

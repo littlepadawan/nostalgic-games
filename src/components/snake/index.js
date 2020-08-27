@@ -13,6 +13,7 @@ function Snake() {
   const [scoreCanBeSaved, setScoreCanBeSaved] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [intervalMs, setIntervalMs] = useState(helpers.initialIntervalMs);
 
   useEffect(() => {
     //Guarding code below from running when it shouldnt (not run when game over is true)
@@ -28,12 +29,13 @@ function Snake() {
             console.log("You lose :(");
             return oldGame;
           }
+          setIntervalMs(helpers.getIntervalMs(newGame.snake.tail.length));
           return newGame;
         }),
-      400
+      intervalMs
     );
     return () => clearInterval(intervalId);
-  }, [gameOver]);
+  }, [gameOver, intervalMs]);
 
   useEffect(() => {
     if (!gameOver) {

@@ -7,15 +7,7 @@ import Snake from "./snake";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
-/* class component
-class App extends Reaxt.Component {
-  render() {
-    return <div>Hello world!</div>;
-  }
-}
-*/
-
-// function component
+// Don't really understand the route parts
 function App() {
   return (
     <Router>

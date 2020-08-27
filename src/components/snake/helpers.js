@@ -1,7 +1,9 @@
 import * as utils from "../../utils";
+
 export const width = 20;
 export const height = 12;
 
+// Generates initial snake with initial direction, a food and an empty array to be filled with commands
 export function generateGame() {
   const snake = {
     head: {
@@ -23,6 +25,7 @@ export function generateGame() {
   };
 }
 
+// Generates food. Checks if the generated food is at the same position as snakes head or tail, if so it generates a new position for food
 export function generateFood(snake) {
   // let x = snake.head.x;
   // let y = snake.head.y;
@@ -38,7 +41,8 @@ export function generateFood(snake) {
   }
   return food;
 }
-// Returns boolean value
+
+// Checks if two positions are the same and returns boolean value
 export function isEqual(p1, p2) {
   return p1.x === p2.x && p1.y === p2.y;
 }
@@ -49,7 +53,7 @@ function random(max) {
 
 // Generete new game state depending on previous game state
 export function tick(game) {
-  // can replace next three lines with const {snake, food, commands } = game;
+  // You can replace next three lines with const {snake, food, commands } = game;
   const oldSnake = game.snake;
   const oldFood = game.food;
   const commands = game.commands;
@@ -189,4 +193,11 @@ function isOpposite(dir1, dir2) {
     (dir1 === "up" && dir2 === "down") ||
     (dir1 === "down" && dir2 === "up")
   );
+}
+
+export const initialIntervalMs = 400;
+// Increase speed as snake gets larger
+// After every third food unit eaten, reduce interval by 10%
+export function getIntervalMs(tailLength) {
+  return initialIntervalMs * Math.pow(0.8, Math.floor((tailLength - 1) / 3));
 }
