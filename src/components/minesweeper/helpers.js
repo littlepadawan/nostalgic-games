@@ -46,17 +46,44 @@ function calculateMines(grid, x, y) {
   return grid[y * width + x].isMine ? 1 : 0;
 }
 
-export function openCell(oldGrid, x, y) {
-  const newGrid = [];
-  for (let i = 0; i < height * width; i++) {
-    newGrid.push({
-      ...oldGrid[i],
-      isOpen: y * width + x === i ? true : oldGrid[i].isOpen,
-      isMarked: y * width + x === i ? false : oldGrid[i].isMarked,
-    });
+export function openCells(oldGrid, x, y) {
+  // Check if x an y are outside of the grid
+  if (x < 0 || y < 0 || x >= width || y >= height) return oldGrid;
+  // If clicked cell is open, don't do anythin
+  if (oldGrid[y * width + x].isOpen) return oldGrid;
+  // Open clicked cell
+  let newGrid = oldGrid.map((cell, i) => {
+    return i === y * width + x
+      ? { ...cell, isOpen: true, isMarked: false }
+      : cell;
+  });
+
+  // If there are no mines around, check neighbouring cells
+  if (!calculateMinesAround(newGrid, x, y)) {
+    newGrid = openCells(newGrid, x - 1, y - 1);
+    newGrid = openCells(newGrid, x, y - 1);
+    newGrid = openCells(newGrid, x + 1, y - 1);
+    newGrid = openCells(newGrid, x - 1, y);
+    newGrid = openCells(newGrid, x + 1, y);
+    newGrid = openCells(newGrid, x - 1, y + 1);
+    newGrid = openCells(newGrid, x, y + 1);
+    newGrid = openCells(newGrid, x + 1, y + 1);
   }
   return newGrid;
 }
+
+// Old openCell , is now called openCells
+// export function openCell(oldGrid, x, y) {
+//   const newGrid = [];
+//   for (let i = 0; i < height * width; i++) {
+//     newGrid.push({
+//       ...oldGrid[i],
+//       isOpen: y * width + x === i ? true : oldGrid[i].isOpen,
+//       isMarked: y * width + x === i ? false : oldGrid[i].isMarked,
+//     });
+//   }
+//   return newGrid;
+// }
 
 export function markCell(oldGrid, x, y) {
   if (oldGrid[y * width + x].isOpen) {

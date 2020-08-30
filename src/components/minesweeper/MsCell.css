@@ -3,17 +3,11 @@
     height: 4vw;
     width: 4vw;
   }
-  .ms-icon {
-    font-size: 1.8vw;
-  }
 }
 @media only screen and (orientation: portrait) {
   .ms-cell {
     height: 9.8vw;
     width: 9.8vw;
-  }
-  .ms-icon {
-    font-size: 4vw;
   }
 }
 
@@ -31,10 +25,6 @@
 .ms-cell-open {
   background-color: #cecece;
   border: 1px solid #dddddd;
-}
-.ms-icon {
-  vertical-align: middle;
-  display: table-cell;
 }
 
 .ms-number {
