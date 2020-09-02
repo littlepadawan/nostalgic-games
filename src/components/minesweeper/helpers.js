@@ -100,6 +100,9 @@ export function markCell(oldGrid, x, y) {
   return newGrid;
 }
 
+export const getMarkedCells = (grid) =>
+  grid.filter((cell) => cell.isMarked === true).length;
+
 export function openAllMines(oldGrid) {
   const newGrid = [];
   for (let i = 0; i < height * width; i++) {
