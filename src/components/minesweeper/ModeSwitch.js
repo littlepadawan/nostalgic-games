@@ -5,7 +5,7 @@ function ModeSwitch({ isMarkMode, onChange }) {
   return (
     <div className="mode-switch">
       <div className="ms-icon-container">
-        <span className="ms-icon">🏴</span>
+        <span className="ms-icon fas fa-flag"></span>
       </div>
       <div className="switch-container">
         <label className="switch">

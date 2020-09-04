@@ -1,3 +1,4 @@
+import * as utils from "../../utils";
 // you can also write const [width, height] = [10, 10], and you call width and height by their names, like variables
 export const width = 10;
 export const height = 10;
@@ -118,4 +119,19 @@ export function isWin(grid) {
   return grid.every((cell) =>
     cell.isMine ? cell.isMarked && !cell.isOpen : cell.isOpen
   );
+}
+
+export function fetchLeaderboard() {
+  return utils
+    .fetchLeaderboard("minesweeper", [["timeMs", "asc"]])
+    .then((leaderboard) =>
+      leaderboard.map(
+        (score, i) =>
+          `${i + 1}.${score.name}: ${utils.prettifyTime(score.timeMs)}`
+      )
+    );
+}
+
+export function saveScore(name, timeMs) {
+  return utils.saveScore("memory", { name: name, timeMs: timeMs });
 }
