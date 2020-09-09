@@ -30,7 +30,6 @@ function ResultModal({
       </Modal.Header>
       <Modal.Body>
         <p>{body}</p>
-        {/* Don't really understand this part below */}
         {!leaderboard && <p>Loading leaderboard...</p>}
         {leaderboard && leaderboard.map((entry, i) => <p key={i}>{entry}</p>)}
         {scoreCanBeSaved && (

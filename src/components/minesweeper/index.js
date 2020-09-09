@@ -29,18 +29,29 @@ function Minesweeper() {
     }
   }, [startTime, win, gameOver]);
 
-  useEffect(() => {
-    if (win) {
-      setShowModal(true);
-      setScoreCanBeSaved(true);
-    }
-  }, [win]);
+  // useEffect(() => {
+  //   if (win) {
+  //     setShowModal(true);
+  //     setScoreCanBeSaved(true);
+  //   }
+  // }, [win]);
+
+  // useEffect(() => {
+  //   if (gameOver) {
+  //     setShowModal(true);
+  //   }
+  // }, [gameOver]);
 
   useEffect(() => {
-    if (gameOver) {
+    if (win) {
+      setScoreCanBeSaved(true);
       setShowModal(true);
     }
-  }, [gameOver]);
+    if (gameOver) {
+      setScoreCanBeSaved(true);
+      setShowModal(true);
+    }
+  }, [win, gameOver]);
 
   for (let y = 0; y < helpers.height; y++) {
     for (let x = 0; x < helpers.width; x++) {
@@ -79,11 +90,25 @@ function Minesweeper() {
     });
   }
 
+  // function onCellRightClick(x, y) {
+  //   if (win || gameOver) return;
+  //   // Will run on first click
+  //   if (startTime === 0) setStartTime(Date.now());
+  //   setGrid((oldGrid) => helpers.markCell(oldGrid, x, y));
+  // }
+
   function onCellRightClick(x, y) {
     if (win || gameOver) return;
     // Will run on first click
     if (startTime === 0) setStartTime(Date.now());
-    setGrid((oldGrid) => helpers.markCell(oldGrid, x, y));
+
+    setGrid((oldGrid) => {
+      let newGrid = helpers.markCell(oldGrid, x, y);
+      if (helpers.isWin(newGrid)) {
+        setWin(true);
+      }
+      return newGrid;
+    });
   }
 
   function onRestart() {
