@@ -126,7 +126,7 @@ function Minesweeper() {
         status1={`Time: ${utils.prettifyTime(elapsedTime)}`}
         status2={`Mines left: ${
           gameOver ? `0` : helpers.mines - helpers.getMarkedCells(grid)
-        }`}
+          }`}
         onRestart={onRestart}
         onShowLeaderboard={() => setShowModal(true)}
       ></StatusBar>
@@ -142,8 +142,8 @@ function Minesweeper() {
           win
             ? "Congratulations, you won!"
             : gameOver
-            ? "Game over!"
-            : "Leaderboard"
+              ? "Game over!"
+              : "Leaderboard"
         }
         body={win ? `Your time was ${utils.prettifyTime(elapsedTime)}.` : ""}
         fetchLeaderboard={helpers.fetchLeaderboard}

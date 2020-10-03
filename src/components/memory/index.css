@@ -1,7 +1,7 @@
 @media only screen and (orientation: landscape) {
   .memory-grid {
     height: 40vw;
-    grid-gap: 0.5vw;
+    grid-gap: 1vw;
   }
 }
 
