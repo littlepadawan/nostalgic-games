@@ -7,8 +7,8 @@ function Home() {
         Nostalgic <span id="home-header-line2">games</span>
       </h2>
       <p className="home-text">
-        Here you can take a trip down memory lane and play memory, snake and
-        minesweeper
+        Take a trip down memory lane and play some memory, snake and
+        minesweeper.
       </p>
     </div>
   );

@@ -21,6 +21,7 @@ function Navigation() {
           <Link
             to="/memory"
             className="nav-link"
+            id="neon-blue"
             style={NavigationStyles.neonBlue}
           >
             Memory
