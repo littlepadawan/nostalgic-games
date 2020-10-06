@@ -25,7 +25,6 @@
 
 .home-header {
   font-family: "Monoton", cursive;
-
   color: #e9a3df;
   text-shadow: 0 0 3px #e9a3df, 0 0 8px #e9a3df, 0 0 13px #de38c8,
     0 0 18px #de38c8, 0 0 23px #de38c8, 0 0 28px #de38c8, 0 0 33px #de38c8;
@@ -48,12 +47,6 @@
   font-size: 2.5vw;
   padding-top: 2vw;
   letter-spacing: 0;
-}
-
-.home-text {
-  padding-top: 5vw;
-  color: white;
-  font-family: "Montserrat", sans-serif;
 }
 
 .game-container {

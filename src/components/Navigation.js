@@ -12,16 +12,22 @@ function Navigation() {
       variant="light"
       style={NavigationStyles.customNavbar}
     >
-      <Link to="/" className="navbar-brand" style={NavigationStyles.home}>
-        Games
+      <Link to="/" className="navbar-brand" style={NavigationStyles.brand}>
+        <span style={NavigationStyles.neonBlue}>G</span>
+        <span style={NavigationStyles.neonOrange}>A</span>
+        <span style={NavigationStyles.neonPink}>M</span>
+        <span style={NavigationStyles.neonYellow}>E</span>
+        <span style={NavigationStyles.neonGreen}>S</span>
       </Link>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto" style={NavigationStyles.customNav}>
+      <Navbar.Collapse
+        id="responsive-navbar-nav"
+        style={NavigationStyles.responsiveNavbar}
+      >
+        <Nav className="mr-auto" style={NavigationStyles.mrAuto}>
           <Link
             to="/memory"
             className="nav-link"
-            id="neon-blue"
             style={NavigationStyles.neonBlue}
           >
             Memory
@@ -29,7 +35,7 @@ function Navigation() {
           <Link
             to="/snake"
             className="nav-link"
-            style={NavigationStyles.neonPurple}
+            style={NavigationStyles.neonPink}
           >
             Snake
           </Link>
